@@ -25,7 +25,9 @@ export const UseEffect = () => {
                         {
                             userList.map((item) => {
                                 return (
-                                    <li>Name:{item.name}</li>
+                                    <li key={item.id}>
+                                        Name:{item.name}
+                                    </li>
                                 )
                             })
                         }

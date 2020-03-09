@@ -5,12 +5,15 @@ export const userListApiSimulation = () => {
             setTimeout(() => {
                 resolve([
                     {
+                        id: 1,
                         name: '123'
                     },
                     {
+                        id: 2,
                         name: '456'
                     },
                     {
+                        id: 3,
                         name: '789'
                     }
                 ]);

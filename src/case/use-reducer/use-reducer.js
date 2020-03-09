@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react'
+import React, {useReducer} from 'react'
 import {userListApiSimulation} from '../../common/api-simulation';
 
 const UserListActions = {
@@ -7,15 +7,16 @@ const UserListActions = {
     getUserListFailed: 'GET_USER_LIST_FAILED',
 };
 
+const initialUserList = {
+    data: []
+};
+
 function userListReducer(state, action) {
-    console.log('[[[[[[[[[[');
-    console.log(state);
-    console.log(action);
     switch (action.type) {
         case UserListActions.getUserListSuccess:
-            return {state: action.payload};
+            return {...state, data: action.payload};
         case UserListActions.getUserListFailed:
-            return;
+            return {...state, data: action.payload};
         default:
             throw new Error();
     }
@@ -23,7 +24,7 @@ function userListReducer(state, action) {
 
 export const UseReducer = () => {
 
-    let [state, dispatch] = useReducer(userListReducer, []);
+    let [state, dispatch] = useReducer(userListReducer, initialUserList);
 
     const getUserList = () => {
         userListApiSimulation()
@@ -39,12 +40,14 @@ export const UseReducer = () => {
         <div>
             <button onClick={getUserList}>Dispatch Load</button>
             {
-                state.length !== 0
+                state.data.length !== 0
                     ? <ul>
                         {
-                            state.map((item) => {
+                            state.data.map((item) => {
                                 return (
-                                    <li>Name:{item.name}</li>
+                                    <li key={item.id}>
+                                        Name:{item.name}
+                                    </li>
                                 )
                             })
                         }
