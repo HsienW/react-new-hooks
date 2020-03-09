@@ -1,27 +1,5 @@
 import React, {useState, useEffect} from 'react'
-
-const userListApiSimulation = () => {
-    return new Promise((resolve, reject) => {
-        const success = true;
-        if (success) {
-            setTimeout(() => {
-                resolve([
-                    {
-                        name: '123'
-                    },
-                    {
-                        name: '456'
-                    },
-                    {
-                        name: '789'
-                    }
-                ]);
-            }, 1000);
-        } else {
-            reject('error');
-        }
-    });
-};
+import {userListApiSimulation} from '../../common/api-simulation';
 
 export const UseEffect = () => {
 
