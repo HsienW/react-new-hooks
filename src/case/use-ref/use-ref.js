@@ -23,26 +23,35 @@ export const UseRefInput = () => {
     );
 }
 
-const SimpleInput = (props, ref) => {
+// 只提供給父層, 特定的 method, 不給整個 Ref 整體
+const SimpleInput = React.forwardRef((props, ref) => {
     const inputRef = useRef();
-    // todo should fix useImperativeHandle.
-    useImperativeHandle = (ref, () => ({
-        focus: () => {
-            inputRef.current.focus();
+    // useImperativeHandle 參數第一個說明: 提供哪個 Ref , 第二個說明: 要提供什麼
+    useImperativeHandle(ref, () => ({
+        getValue: () => {
+            return inputRef.current.value;
+        },
+        getFocus: () => {
+            return inputRef.current.focus;
         }
     }));
     return (
-        <input ref={inputRef}/>
-    );
-};
+        <input ref={inputRef} type="text"/>
+    )
+});
 
-const RefSimpleInput = React.forwardRef(SimpleInput);
 
 export const UseRefForm = () => {
+    const inputElement = useRef(null);
+    const onButtonClick = () => {
+        console.log(inputElement.current.getValue());
+    };
+
     return (
-        <form>
-            <RefSimpleInput/>
-        </form>
+        <div>
+            <SimpleInput ref={inputElement}/>
+            <button onClick={onButtonClick}>Log input value</button>
+        </div>
     );
 };
 
